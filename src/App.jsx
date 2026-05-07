@@ -83,8 +83,6 @@ export default function App() {
   const [previewSrc, setPreviewSrc] = useState('');
   const [loading, setLoading] = useState(false);
   
-  const API_BASE = window.location.hostname === 'localhost' ? 'http://localhost:8001' : '';
-
   const [palette, setPalette] = useState([]);
   const [selectedColor, setSelectedColor] = useState(null); 
   const [colorDetails, setColorDetails] = useState(null); 
@@ -197,7 +195,7 @@ export default function App() {
     fd.append('file', file);
     fd.append('fabricType', 'Twill'); // Maintain backend compat
     try {
-      const res = await fetch(`${API_BASE}/api/analyze`, { method: 'POST', body: fd });
+      const res = await fetch('/api/analyze', { method: 'POST', body: fd });
       const data = await res.json();
       setPalette(data.extracted_palette || []);
       if (data.extracted_palette && data.extracted_palette.length > 0) {
@@ -218,7 +216,7 @@ export default function App() {
     fd.append('b', colorObj.rgb[2]);
     fd.append('fabricType', 'Twill');
     try {
-      const res = await fetch(`${API_BASE}/api/process-color`, { method: 'POST', body: fd });
+      const res = await fetch('/api/process-color', { method: 'POST', body: fd });
       const data = await res.json();
       setColorDetails(data);
     } catch (e) {}
