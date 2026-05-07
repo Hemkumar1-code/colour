@@ -142,7 +142,7 @@ FABRIC_MACHINES = {
     "Rib": "Textalk + Homer"
 }
 
-@app.post("/analyze")
+@app.post("/api/analyze")
 async def analyze_fabric(file: UploadFile = File(...), fabricType: str = Form(...)):
     image_bytes = await file.read()
     
@@ -154,7 +154,7 @@ async def analyze_fabric(file: UploadFile = File(...), fabricType: str = Form(..
     
     return process_color_logic(main_r, main_g, main_b, fabricType, dominant_data)
 
-@app.post("/process-color")
+@app.post("/api/process-color")
 async def process_manual_color(
     r: int = Form(...), 
     g: int = Form(...), 
